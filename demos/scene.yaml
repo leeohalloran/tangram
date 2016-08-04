@@ -5,7 +5,7 @@ import:
     - styles/popup.yaml
 
 global:
-    language: en # OSM language code
+    language: eng # ISO 3-char code
     language_text_source: |
         function() {
             // Use preferred language label if available
@@ -159,9 +159,10 @@ styles:
 sources:
     mapzen:
         type: TopoJSON
-        url: https://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson
-        url_params:
-            api_key: vector-tiles-HqUVidw
+        # url: https://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson
+        # url_params:
+        #     api_key: vector-tiles-HqUVidw
+        url: http://tile.dev.mapzen.com/vector/v1/all/{z}/{x}/{y}.topojson
         max_zoom: 16
         # # Data filtering demo with 'scripts' and 'transform' properties:
         # # Tile data is passed through a 'transform' pre-processing function before Tangram geometry is built.
@@ -249,7 +250,7 @@ layers:
         labels:
             filter:
                 $geometry: point
-                label_placement: yes
+                label_placement: true
                 kind: [park, forest, cemetery, graveyard]
                 any:
                     # show labels for smaller landuse areas at higher zooms
@@ -360,7 +361,7 @@ layers:
                     outline:
                         width: 0
         airports:
-            filter: { aeroway: true }
+            filter: { kind: aeroway }
             draw:
                 lines:
                     color: '#ddd'
@@ -368,13 +369,13 @@ layers:
                         width: 0
 
             taxiways:
-                filter: { aeroway: taxiway }
+                filter: { kind_detail: taxiway }
                 draw:
                     lines:
                         width: [[13, 0px], [14, 2px], [17, 10px]]
 
             runways:
-                filter: { aeroway: runway }
+                filter: { kind_detail: runway }
                 draw:
                     lines:
                         color: [[13, '#FFE4B5'], [16, white]]
@@ -389,10 +390,9 @@ layers:
         filter:
             $zoom: { min: 7 }
             any: [name: true, ref: true]
-            aeroway: false
             tunnel: false
             railway: false
-            not: { kind: rail }
+            not: { kind: [rail, aeroway] }
 
         highway:
             filter: { kind: highway, $zoom: { min: 7 } }
@@ -662,7 +662,7 @@ layers:
     #             interactive: true
 
     #     labels:
-    #         filter: { label_placement: yes }
+    #         filter: { label_placement: true }
     #         draw:
     #             text:
     #                 text_source: schoolDistrict

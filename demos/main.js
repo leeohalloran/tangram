@@ -345,15 +345,15 @@ Enjoy!
         // Language selector
         var langs = {
             '(default)': null,
-            'English': 'en',
-            'Russian': 'ru',
-            'Japanese': 'ja',
-            'German': 'de',
-            'French': 'fr',
-            'Arabic': 'ar',
-            'Spanish': 'es'
+            'English': 'eng',
+            'Russian': 'rus',
+            'Japanese': 'jpn',
+            'German': 'deu',
+            'French': 'fra',
+            'Arabic': 'ara',
+            'Spanish': 'spa'
         };
-        gui.language = 'en';
+        gui.language = 'eng';
         gui.add(gui, 'language', langs).onChange(function(value) {
             scene.config.global.language = value;
             scene.updateConfig();
